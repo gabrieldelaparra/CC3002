@@ -11,6 +11,8 @@ import sh4j.model.highlight.SModifier;
 import sh4j.model.highlight.SPseudoVariable;
 import sh4j.model.highlight.SSemiColon;
 import sh4j.model.highlight.SString;
+import sh4j.model.style.SBredStyle;
+import sh4j.model.style.SDarkStyle;
 import sh4j.model.style.SEclipseStyle;
 import sh4j.ui.SFrame;
 
@@ -44,6 +46,8 @@ public final class MainClass {
     frame.addCommands(new SSortClassesByHierarchy(),
         new SSortClassesByName(),
         new SSortPackagesByName());
+
+    frame.addStyles(new SBredStyle(), new SDarkStyle(), new SEclipseStyle());
     System.out.println(File.separator);
   }
 }
