@@ -59,7 +59,8 @@ public class SFrame extends JFrame implements Observer {
   private boolean showLineNumbers;
   private JPanel auxPane;
   private JLabel statusBar;
-  private String statusBarText;
+  //  private String statusBarText;
+  private StatusBarSummary sbSummary;
 
   /**
    * Create a browser, it will use the style and the lighters passed in the argutments.
@@ -81,6 +82,8 @@ public class SFrame extends JFrame implements Observer {
     bar.add(hierarchyMenu);
 
     setJMenuBar(bar);
+
+    sbSummary = new StatusBarSummary(statusBar);
   }
 
   /**
@@ -159,14 +162,17 @@ public class SFrame extends JFrame implements Observer {
     addOn(classes, BorderLayout.CENTER);
     packages = new JList<SPackage>();
     addOn(packages, BorderLayout.WEST);
-    auxPane = buildAuxPane();
-    htmlPanel = buildHTMLPanel();
-    statusBar = buildStatusBar();
+
+    buildAuxPane();
+    buildHTMLPanel(auxPane);
+    buildStatusBar();
+
     packages.addListSelectionListener(new ListSelectionListener() {
       @Override
       public void valueChanged(ListSelectionEvent e) {
         if (packages.getSelectedIndex() != -1) {
           update(classes, packages.getSelectedValue().classes());
+          sbSummary.update(packages.getSelectedValue());
         }
       }
     });
@@ -175,6 +181,7 @@ public class SFrame extends JFrame implements Observer {
       public void valueChanged(ListSelectionEvent e) {
         if (classes.getSelectedIndex() != -1) {
           update(methods, classes.getSelectedValue().methods());
+          sbSummary.update(classes.getSelectedValue());
         }
       }
     });
@@ -184,10 +191,10 @@ public class SFrame extends JFrame implements Observer {
         if (methods.getSelectedIndex() != -1) {
           SMethod method = methods.getSelectedValue();
           htmlPanel.setText(method.body().toHTML(showLineNumbers, style, lighters));
+          sbSummary.update(method);
         }
       }
     });
-
   }
 
   public void addOn(JList<? extends SObject> list, String direction) {
@@ -235,38 +242,33 @@ public class SFrame extends JFrame implements Observer {
     getContentPane().add(pathPanel, BorderLayout.NORTH);
   }
 
-  public JPanel buildAuxPane() {
-    JPanel auxPane = new JPanel();
+  public void buildAuxPane() {
+    auxPane = new JPanel();
     auxPane.setLayout(new BorderLayout());
+
     getContentPane().add(auxPane, BorderLayout.SOUTH);
-    return auxPane;
   }
 
-  public JEditorPane buildHTMLPanel() {
-    JEditorPane htmlPanel = new JEditorPane();
+  public void buildHTMLPanel(final JPanel parentPane) {
+    htmlPanel = new JEditorPane();
     htmlPanel.setEditable(false);
     htmlPanel.setMinimumSize(new Dimension(600, 300));
     htmlPanel.setPreferredSize(new Dimension(600, 300));
     htmlPanel.setMaximumSize(new Dimension(600, 300));
     htmlPanel.setContentType("text/html");
 
-    auxPane.add(new JScrollPane(htmlPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+    parentPane.add(new JScrollPane(htmlPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
         JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS), BorderLayout.CENTER);
-
-    return htmlPanel;
   }
 
-  public JLabel buildStatusBar() {
-    JLabel statusBar = new JLabel();
-    statusBar.setText(statusBarText);
+  public void buildStatusBar() {
+    statusBar = new JLabel();
+    statusBar.setText("JBrowser: Please browse for a path to continue");
     statusBar.setBorder(new BevelBorder(BevelBorder.LOWERED));
     statusBar.setPreferredSize(new Dimension(getWidth(), 16));
     statusBar.setLayout(new BoxLayout(statusBar, BoxLayout.X_AXIS));
     auxPane.add(statusBar, BorderLayout.SOUTH);
-    return statusBar;
   }
-
-
 
   public void update(SProject project) {
     SPackage pkg = packages.getSelectedValue();
