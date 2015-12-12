@@ -245,7 +245,9 @@ public class SFrame extends JFrame implements Observer {
   public void buildAuxPane() {
     auxPane = new JPanel();
     auxPane.setLayout(new BorderLayout());
-
+    auxPane.setMinimumSize(new Dimension(600, 300));
+    auxPane.setPreferredSize(new Dimension(600, 300));
+    auxPane.setMaximumSize(new Dimension(600, 300));
     getContentPane().add(auxPane, BorderLayout.SOUTH);
   }
 

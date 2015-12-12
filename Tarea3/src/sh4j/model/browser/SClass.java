@@ -14,6 +14,8 @@ import java.util.List;
 public class SClass extends SObject {
   private final TypeDeclaration declaration;
   private final List<SMethod> methods;
+  private String className;
+  private boolean isParent = false;
 
   /**
    * Base Constructor.
@@ -23,7 +25,12 @@ public class SClass extends SObject {
    */
   public SClass(TypeDeclaration typeDeclaration, List<SMethod> methods) {
     declaration = typeDeclaration;
+    getClassName();
     this.methods = methods;
+  }
+
+  private void getClassName() {
+    this.className = declaration.getName().getIdentifier();
   }
 
   /**
@@ -41,7 +48,7 @@ public class SClass extends SObject {
    * @return Returns the current Class Name.
    */
   public String className() {
-    return declaration.getName().getIdentifier();
+    return className;
   }
 
   /**
@@ -49,20 +56,8 @@ public class SClass extends SObject {
    *
    * @return Returns true if the current class is an interface.
    */
-  private boolean isInterface() {
+  public boolean isInterface() {
     return declaration.isInterface();
-  }
-
-  /**
-   * Gets the current's Super Class Name.
-   *
-   * @return Returns the current's class Super Class Name.
-   */
-  public String superClass() {
-    if (declaration.getSuperclassType() == null) {
-      return "Object";
-    }
-    return declaration.getSuperclassType().toString();
   }
 
 //  /**
@@ -76,6 +71,18 @@ public class SClass extends SObject {
 //    }
 //    return declaration.getSuperclassType().toString() + "." + this.className();
 //  }
+
+  /**
+   * Gets the current's Super Class Name.
+   *
+   * @return Returns the current's class Super Class Name.
+   */
+  public String superClass() {
+    if (declaration.getSuperclassType() == null) {
+      return "Object";
+    }
+    return declaration.getSuperclassType().toString();
+  }
 
   /**
    * Gets the current class name.
@@ -113,4 +120,23 @@ public class SClass extends SObject {
       return super.font();
     }
   }
+
+  public void indent(boolean indent) {
+    getClassName();
+    if (indent) {
+      className = "    " + className;
+    }
+  }
+
+  public boolean isParent() {
+    return isParent;
+  }
+
+  public void setParent(final boolean isParent) {
+    this.isParent = isParent;
+  }
+
+//  public void setName(final String s) {
+//    className = className + "." + s;
+//  }
 }
