@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inheritJdk="true">
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$"/>
+	<lib name="org.eclipse.core.contenttype_3.4.200.v20140207-1251.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/org.eclipse.core.contenttype_3.4.200.v20140207-1251.jar!/"/>
+	</lib>
+	<lib name="org.eclipse.core.jobs_3.6.1.v20141014-1248.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/org.eclipse.core.jobs_3.6.1.v20141014-1248.jar!/"/>
+	</lib>
+	<lib name="org.eclipse.core.resources_3.9.1.v20140825-1431.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/org.eclipse.core.resources_3.9.1.v20140825-1431.jar!/"/>
+	</lib>
+	<lib name="org.eclipse.core.runtime_3.10.0.v20140318-2214.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/org.eclipse.core.runtime_3.10.0.v20140318-2214.jar!/"/>
+	</lib>
+	<lib name="org.eclipse.equinox.common_3.6.200.v20130402-1505.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/org.eclipse.equinox.common_3.6.200.v20130402-1505.jar!/"/>
+	</lib>
+	<lib name="org.eclipse.equinox.preferences_3.5.200.v20140224-1527.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/org.eclipse.equinox.preferences_3.5.200.v20140224-1527.jar!/"/>
+	</lib>
+	<lib name="org.eclipse.jdt.core.manipulation_1.5.100.v20141002-1241.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/org.eclipse.jdt.core.manipulation_1.5.100.v20141002-1241.jar!/"/>
+	</lib>
+	<lib name="org.eclipse.jdt.core_3.11.0.v20150602-1242.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/org.eclipse.jdt.core_3.11.0.v20150602-1242.jar!/"/>
+	</lib>
+	<lib name="org.eclipse.osgi_3.10.2.v20150203-1939.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/org.eclipse.osgi_3.10.2.v20150203-1939.jar!/"/>
+	</lib>
+	<levels>
+		<level name="junit:junit:4.8.1" value="project"/>
+	</levels>
+</component>

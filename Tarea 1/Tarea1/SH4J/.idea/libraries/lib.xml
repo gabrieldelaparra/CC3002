@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/org.eclipse.jdt.core_3.11.0.v20150602-1242.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.eclipse.equinox.common_3.6.200.v20130402-1505.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.eclipse.jdt.core.manipulation_1.5.100.v20141002-1241.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.eclipse.core.jobs_3.6.1.v20141014-1248.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.eclipse.core.resources_3.9.1.v20140825-1431.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.eclipse.equinox.preferences_3.5.200.v20140224-1527.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.eclipse.core.contenttype_3.4.200.v20140207-1251.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.eclipse.core.runtime_3.10.0.v20140318-2214.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.eclipse.osgi_3.10.2.v20150203-1939.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
