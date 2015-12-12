@@ -13,8 +13,6 @@ import java.util.List;
  */
 public class SSortClassesByHierarchy extends SCommand {
 
-  private final boolean indent = true;
-
   /**
    * Overriden method, takes True as Indentation. For UI use.
    *
@@ -22,13 +20,14 @@ public class SSortClassesByHierarchy extends SCommand {
    */
   @Override
   public void executeOn(SProject project) {
-    executeOn(project, indent);
+    executeOn(project, true);
   }
 
   /**
    * Applies Sorting to the current class.
+   *
    * @param project Project to be sorted.
-   * @param indent If the classes need to be indented.
+   * @param indent  If the classes need to be indented.
    */
   public void executeOn(SProject project, boolean indent) {
     (new SSortClassesByName()).executeOn(project);
@@ -45,9 +44,9 @@ public class SSortClassesByHierarchy extends SCommand {
       for (SClass parent : pkg.classes()) {
         if (parent.isParent()) {
           for (SClass child : pkg.classes()) {
-            if (!child.isParent() &&
-                path(pkg.classes(), child).contains(parent.className()) &&
-                indent) {
+            if (!child.isParent()
+                && path(pkg.classes(), child).contains(parent.className())
+                && indent) {
               child.indent(true);
             }
           }
@@ -59,11 +58,12 @@ public class SSortClassesByHierarchy extends SCommand {
 
   /**
    * Gets the Class Hierarchy as a String.
-   * @param cls Package classes collection.
+   *
+   * @param cls      Package classes collection.
    * @param theClass Class whose Hierarchy is required.
    * @return Returns the Class Hierarchy.
    */
-  public String path(List<SClass> cls, SClass theClass) {
+  private String path(List<SClass> cls, SClass theClass) {
     SClass parent = get(cls, theClass.superClass());
     if (parent == null) {
       return theClass.toString();
@@ -74,11 +74,12 @@ public class SSortClassesByHierarchy extends SCommand {
 
   /**
    * Gets the Class' parent Class.
-   * @param cls Package Classes Collection.
+   *
+   * @param cls      Package Classes Collection.
    * @param theClass Class whose Parent Class is required.
    * @return Returns theClass parent's class.
    */
-  public SClass get(List<SClass> cls, String theClass) {
+  private SClass get(List<SClass> cls, String theClass) {
     for (SClass c : cls) {
       if (c.toString().equals(theClass)) {
         c.setParent(true);
