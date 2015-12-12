@@ -20,10 +20,13 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -32,6 +35,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.BevelBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -52,6 +56,10 @@ public class SFrame extends JFrame implements Observer {
   private JMenu file;
   private JMenu hierarchyMenu;
   private SProject project;
+  private boolean showLineNumbers;
+  private JPanel auxPane;
+  private JLabel statusBar;
+  private String statusBarText;
 
   /**
    * Create a browser, it will use the style and the lighters passed in the argutments.
@@ -65,11 +73,13 @@ public class SFrame extends JFrame implements Observer {
     this.lighters = lighters;
     this.style = style;
     JMenuBar bar = new JMenuBar();
+
     file = new JMenu("Sort");
     bar.add(file);
 
-    hierarchyMenu = new JMenu("Highlight");
+    hierarchyMenu = new JMenu("Style");
     bar.add(hierarchyMenu);
+
     setJMenuBar(bar);
   }
 
@@ -89,6 +99,22 @@ public class SFrame extends JFrame implements Observer {
     for (SStyle c : styles) {
       addStyle(c);
     }
+    addLineNumberCheckBoxMenu();
+  }
+
+  private void addLineNumberCheckBoxMenu() {
+    hierarchyMenu.addSeparator();
+    JCheckBoxMenuItem item = new JCheckBoxMenuItem("Line Numbers");
+    item.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        if (project != null) {
+          showLineNumbers = !showLineNumbers;
+          style(style);
+        }
+      }
+    });
+    hierarchyMenu.add(item);
   }
 
   private void addStyle(final SStyle c) {
@@ -133,7 +159,9 @@ public class SFrame extends JFrame implements Observer {
     addOn(classes, BorderLayout.CENTER);
     packages = new JList<SPackage>();
     addOn(packages, BorderLayout.WEST);
-    htmlPanel = buildHTMLPanel(BorderLayout.SOUTH);
+    auxPane = buildAuxPane();
+    htmlPanel = buildHTMLPanel();
+    statusBar = buildStatusBar();
     packages.addListSelectionListener(new ListSelectionListener() {
       @Override
       public void valueChanged(ListSelectionEvent e) {
@@ -155,7 +183,7 @@ public class SFrame extends JFrame implements Observer {
       public void valueChanged(ListSelectionEvent e) {
         if (methods.getSelectedIndex() != -1) {
           SMethod method = methods.getSelectedValue();
-          htmlPanel.setText(method.body().toHTML(style, lighters));
+          htmlPanel.setText(method.body().toHTML(showLineNumbers, style, lighters));
         }
       }
     });
@@ -207,17 +235,38 @@ public class SFrame extends JFrame implements Observer {
     getContentPane().add(pathPanel, BorderLayout.NORTH);
   }
 
-  public JEditorPane buildHTMLPanel(String direction) {
+  public JPanel buildAuxPane() {
+    JPanel auxPane = new JPanel();
+    auxPane.setLayout(new BorderLayout());
+    getContentPane().add(auxPane, BorderLayout.SOUTH);
+    return auxPane;
+  }
+
+  public JEditorPane buildHTMLPanel() {
     JEditorPane htmlPanel = new JEditorPane();
     htmlPanel.setEditable(false);
     htmlPanel.setMinimumSize(new Dimension(600, 300));
     htmlPanel.setPreferredSize(new Dimension(600, 300));
     htmlPanel.setMaximumSize(new Dimension(600, 300));
     htmlPanel.setContentType("text/html");
-    getContentPane().add(new JScrollPane(htmlPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-        JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS), direction);
+
+    auxPane.add(new JScrollPane(htmlPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+        JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS), BorderLayout.CENTER);
+
     return htmlPanel;
   }
+
+  public JLabel buildStatusBar() {
+    JLabel statusBar = new JLabel();
+    statusBar.setText(statusBarText);
+    statusBar.setBorder(new BevelBorder(BevelBorder.LOWERED));
+    statusBar.setPreferredSize(new Dimension(getWidth(), 16));
+    statusBar.setLayout(new BoxLayout(statusBar, BoxLayout.X_AXIS));
+    auxPane.add(statusBar, BorderLayout.SOUTH);
+    return statusBar;
+  }
+
+
 
   public void update(SProject project) {
     SPackage pkg = packages.getSelectedValue();
@@ -238,7 +287,7 @@ public class SFrame extends JFrame implements Observer {
   public void style(SStyle style) {
     this.style = style;
     SMethod method = methods.getSelectedValue();
-    htmlPanel.setText(method.body().toHTML(style, lighters));
+    htmlPanel.setText(method.body().toHTML(showLineNumbers, style, lighters));
   }
 
   @Override
