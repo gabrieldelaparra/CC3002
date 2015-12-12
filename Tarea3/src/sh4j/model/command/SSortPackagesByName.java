@@ -10,6 +10,11 @@ import java.util.Comparator;
  * Created by CLGADEL on 15/11/2015.
  */
 public class SSortPackagesByName extends SCommand {
+  /**
+   * Sorts the current Project's Packages by Name.
+   *
+   * @param project Project which calls the Command.
+   */
   @Override
   public void executeOn(SProject project) {
     Collections.sort(project.packages(),

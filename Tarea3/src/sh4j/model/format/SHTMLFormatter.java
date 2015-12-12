@@ -57,21 +57,37 @@ public class SHTMLFormatter implements SFormatter {
     return new SDummy();
   }
 
+  /**
+   * Appends a styled word.
+   *
+   * @param word Word to be appended.
+   */
   @Override
   public void styledWord(String word) {
     buffer.append(lookup(word).highlight(word, style));
   }
 
+  /**
+   * Appends a styled Character.
+   * @param character Character to be styled and appended.
+   */
   @Override
   public void styledChar(char character) {
     buffer.append(lookup(character + "").highlight(character + "", style));
   }
 
+  /**
+   * Appends a styled Space.
+   */
   @Override
   public void styledSpace() {
     buffer.append(' ');
   }
 
+  /**
+   * Appends a Carrier Return.
+   * For Tarea3, it also adds optionally the line numbers.
+   */
   @Override
   public void styledCR() {
     lineCount++;
@@ -83,6 +99,10 @@ public class SHTMLFormatter implements SFormatter {
     indent();
   }
 
+  /**
+   * Sets indent level definitions for a Block.
+   * @param block Block to be intended.
+   */
   @Override
   public void styledBlock(SBlock block) {
     level++;
@@ -92,12 +112,19 @@ public class SHTMLFormatter implements SFormatter {
     level--;
   }
 
+  /**
+   * Adds the required spaces for indentation.
+   */
   private void indent() {
     for (int i = 0; i < level; i++) {
       buffer.append("  ");
     }
   }
 
+  /**
+   * Returns the formatted text.
+   * @return Formats the texts and returns it.
+   */
   @Override
   public String formattedText() {
     return style.formatBody(buffer.toString());

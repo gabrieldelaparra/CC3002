@@ -60,18 +60,6 @@ public class SClass extends SObject {
     return declaration.isInterface();
   }
 
-//  /**
-//   * Gets a concatenated SuperClass.Class Name.
-//   *
-//   * @return Returns a SuperClass.ClassName String.
-//   */
-//  public String superClassName() {
-//    if (declaration.getSuperclassType() == null) {
-//      return this.className();
-//    }
-//    return declaration.getSuperclassType().toString() + "." + this.className();
-//  }
-
   /**
    * Gets the current's Super Class Name.
    *
@@ -121,6 +109,11 @@ public class SClass extends SObject {
     }
   }
 
+  /**
+   * Indents the current Class name.
+   *
+   * @param indent Sets if the name should be indented.
+   */
   public void indent(boolean indent) {
     getClassName();
     if (indent) {
@@ -128,15 +121,22 @@ public class SClass extends SObject {
     }
   }
 
+  /**
+   * Returns true if the class is a Parent class for other classes.
+   * This is set by the SortByHierarchy Class.
+   * @return True if the class is Parent.
+   */
   public boolean isParent() {
     return isParent;
   }
 
+  /**
+   * Sets the Parent definition for this class.
+   * Set by the SortByHierarchy Class.
+   * @param isParent Sets true if the class is a Parent Class.
+   */
   public void setParent(final boolean isParent) {
     this.isParent = isParent;
   }
 
-//  public void setName(final String s) {
-//    className = className + "." + s;
-//  }
 }

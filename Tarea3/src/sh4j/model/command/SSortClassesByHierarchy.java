@@ -15,11 +15,21 @@ public class SSortClassesByHierarchy extends SCommand {
 
   private boolean indent = true;
 
+  /**
+   * Overriden method, takes True as Indentation. For UI use.
+   *
+   * @param project Project which calls the Command.
+   */
   @Override
   public void executeOn(SProject project) {
     executeOn(project, indent);
   }
 
+  /**
+   * Applies Sorting to the current class.
+   * @param project Project to be sorted.
+   * @param indent If the classes need to be indented.
+   */
   public void executeOn(SProject project, boolean indent) {
     (new SSortClassesByName()).executeOn(project);
     for (final SPackage pkg : project.packages()) {
@@ -29,8 +39,7 @@ public class SSortClassesByHierarchy extends SCommand {
             public int compare(SClass o1, SClass o2) {
               String path1 = path(pkg.classes(), o1);
               String path2 = path(pkg.classes(), o2);
-              int comp = path1.compareTo(path2);
-              return comp;
+              return path1.compareTo(path2);
             }
           });
       for (SClass parent : pkg.classes()) {
@@ -47,6 +56,12 @@ public class SSortClassesByHierarchy extends SCommand {
     project.changed();
   }
 
+  /**
+   * Gets the Class Hierarchy as a String.
+   * @param cls Package classes collection.
+   * @param theClass Class whose Hierarchy is required.
+   * @return Returns the Class Hierarchy.
+   */
   public String path(List<SClass> cls, SClass theClass) {
     SClass parent = get(cls, theClass.superClass());
     if (parent == null) {
@@ -56,6 +71,12 @@ public class SSortClassesByHierarchy extends SCommand {
     }
   }
 
+  /**
+   * Gets the Class' parent Class.
+   * @param cls Package Classes Collection.
+   * @param theClass Class whose Parent Class is required.
+   * @return Returns theClass parent's class.
+   */
   public SClass get(List<SClass> cls, String theClass) {
     for (SClass c : cls) {
       if (c.toString().equals(theClass)) {

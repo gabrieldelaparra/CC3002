@@ -1,6 +1,7 @@
 package sh4j.model.highlight;
 
 import sh4j.model.style.SStyle;
+
 /**
  * Highlighter Interface.
  *

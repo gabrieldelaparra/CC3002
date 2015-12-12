@@ -70,10 +70,10 @@ public class SSortTest {
     for (SClass c : cls) {
       pkg.addClass(c);
     }
-    (new SSortClassesByHierarchy()).executeOn(project, false);
+    (new SSortClassesByHierarchy()).executeOn(project);
     String[] result = toStringArray(pkg.classes().toArray());
     print(result);
-    String[] expected = new String[]{"A", "G", "Z", "F", "W"};
+    String[] expected = new String[]{"A", "    G", "Z", "    F", "    W"};
     assertArrayEquals(expected, result);
     assertEquals("Object", cls.get(0).superClass());
     assertEquals("Z", cls.get(1).superClass());

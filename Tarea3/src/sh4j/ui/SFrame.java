@@ -40,7 +40,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 /**
- * JBrowser
+ * JBrowser. gdelaparra: 2015.12.12: Added StatusBar and Styles Menu.
  *
  * @author juampi
  */
@@ -59,7 +59,6 @@ public class SFrame extends JFrame implements Observer {
   private boolean showLineNumbers;
   private JPanel auxPane;
   private JLabel statusBar;
-  //  private String statusBarText;
   private StatusBarSummary sbSummary;
 
   /**
@@ -89,8 +88,8 @@ public class SFrame extends JFrame implements Observer {
   /**
    * Add commands to the menu bar
    */
-  public void addCommands(SCommand... cmds) {
-    for (SCommand c : cmds) {
+  public void addCommands(SCommand... commands) {
+    for (SCommand c : commands) {
       addCommand(c);
     }
   }
@@ -105,6 +104,9 @@ public class SFrame extends JFrame implements Observer {
     addLineNumberCheckBoxMenu();
   }
 
+  /**
+   * Adds a checkBox menu item to toggle Line Numbers.
+   */
   private void addLineNumberCheckBoxMenu() {
     hierarchyMenu.addSeparator();
     JCheckBoxMenuItem item = new JCheckBoxMenuItem("Line Numbers");
@@ -120,32 +122,47 @@ public class SFrame extends JFrame implements Observer {
     hierarchyMenu.add(item);
   }
 
-  private void addStyle(final SStyle c) {
-    JMenuItem item = new JMenuItem(c.toString());
+  /**
+   * Adds styles to Style's Menu and subscribe events.
+   *
+   * @param style Style to be added.
+   */
+  private void addStyle(final SStyle style) {
+    JMenuItem item = new JMenuItem(style.toString());
     item.addActionListener(new ActionListener() {
       @Override
-      public void actionPerformed(ActionEvent e) {
+      public void actionPerformed(ActionEvent actionEvent) {
         if (project != null) {
-          style(c);
+          style(style);
         }
       }
     });
     hierarchyMenu.add(item);
   }
 
-  private void addCommand(final SCommand c) {
-    JMenuItem item = new JMenuItem(c.name());
+  /**
+   * Adds Commans to the Command's Menu and subscribe events.
+   *
+   * @param command Command to be added.
+   */
+  private void addCommand(final SCommand command) {
+    JMenuItem item = new JMenuItem(command.name());
     item.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         if (project != null) {
-          c.executeOn(project);
+          command.executeOn(project);
         }
       }
     });
     file.add(item);
   }
 
+  /**
+   * Updates a List of objects with new Data.
+   * @param list List to be updated.
+   * @param data Data for the List.
+   */
   public void update(@SuppressWarnings("rawtypes") JList list, @SuppressWarnings("rawtypes") List
       data) {
     list.setListData(data.toArray(new SObject[]{}));
@@ -154,6 +171,9 @@ public class SFrame extends JFrame implements Observer {
     }
   }
 
+  /**
+   * Gnereates the UI with all controls.
+   */
   private void build() {
     buildPathPanel();
     methods = new JList<SMethod>();
@@ -197,6 +217,11 @@ public class SFrame extends JFrame implements Observer {
     });
   }
 
+  /**
+   * Generic method for adding panels for Packages, Class and Methods.
+   * @param list List to be added.
+   * @param direction Control's Location.
+   */
   public void addOn(JList<? extends SObject> list, String direction) {
     list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     list.setLayoutOrientation(JList.VERTICAL);
@@ -208,6 +233,9 @@ public class SFrame extends JFrame implements Observer {
     getContentPane().add(pane, direction);
   }
 
+  /**
+   * Open Directory Dialog and Label with Directory Name in a Control for the UI.
+   */
   private void buildPathPanel() {
     JPanel pathPanel = new JPanel();
     pathPanel.setLayout(new BorderLayout());
@@ -242,6 +270,9 @@ public class SFrame extends JFrame implements Observer {
     getContentPane().add(pathPanel, BorderLayout.NORTH);
   }
 
+  /**
+   * Auxiliary Panel for adding the HTML Panel and the Status Bar.
+   */
   public void buildAuxPane() {
     auxPane = new JPanel();
     auxPane.setLayout(new BorderLayout());
@@ -251,6 +282,10 @@ public class SFrame extends JFrame implements Observer {
     getContentPane().add(auxPane, BorderLayout.SOUTH);
   }
 
+  /**
+   * HTML Panel Generator.
+   * @param parentPane Where the Control should be added.
+   */
   public void buildHTMLPanel(final JPanel parentPane) {
     htmlPanel = new JEditorPane();
     htmlPanel.setEditable(false);
@@ -263,6 +298,9 @@ public class SFrame extends JFrame implements Observer {
         JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS), BorderLayout.CENTER);
   }
 
+  /**
+   * StatusBar control generation.
+   */
   public void buildStatusBar() {
     statusBar = new JLabel();
     statusBar.setText("JBrowser: Please browse for a path to continue");
@@ -272,6 +310,10 @@ public class SFrame extends JFrame implements Observer {
     auxPane.add(statusBar, BorderLayout.SOUTH);
   }
 
+  /**
+   * Updates for the project based on a new selected Directory.
+   * @param project Project and its internal contect to be updated.
+   */
   public void update(SProject project) {
     SPackage pkg = packages.getSelectedValue();
     SClass cls = classes.getSelectedValue();
@@ -288,16 +330,25 @@ public class SFrame extends JFrame implements Observer {
     }
   }
 
+  /**
+   * Styles the HTMLPanel contents.
+   * @param style Style to be applied.
+   */
   public void style(SStyle style) {
     this.style = style;
     SMethod method = methods.getSelectedValue();
     htmlPanel.setText(method.body().toHTML(showLineNumbers, style, lighters));
   }
 
+  /**
+   * Observable Update Implementation for the UI.
+   * @param observable Project which would be updated.
+   * @param updatableObject Not Used.
+   */
   @Override
-  public void update(Observable o, Object arg) {
-    if (o instanceof SProject) {
-      SProject project = (SProject) o;
+  public void update(Observable observable, Object updatableObject) {
+    if (observable instanceof SProject) {
+      SProject project = (SProject) observable;
       update(project);
     }
   }

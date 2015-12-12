@@ -17,10 +17,19 @@ public class StatusBarSummary {
   public boolean displaySummary = true;
   private JLabel statusBar;
 
+  /**
+   * Constructor. Takes a Control to be updated.
+   *
+   * @param statusBar StatusBar's JLabel Control.
+   */
   public StatusBarSummary(final JLabel statusBar) {
     this.statusBar = statusBar;
   }
 
+  /**
+   * Applies formatting to the StatusBar Text.
+   * @return Formatted StatusBar's text.
+   */
   public String GetText() {
     if (displaySummary) {
       return String.format(TextFormat, LineCount, ClassCount, Warning);
@@ -28,16 +37,28 @@ public class StatusBarSummary {
     return "";
   }
 
+  /**
+   * Updates the StatusBar Text and displays the SClass Information.
+   * @param cls SClass information to be displayed.
+   */
   public void update(final SClass cls) {
 
   }
 
+  /**
+   * Updates the StatusBar Text and displays the SMethod Information.
+   * @param method SMethod information to be displayed.
+   */
   public void update(final SMethod method) {
     LineCount = method.getLinesOfCode();
     Warning = LineCount > 30 ? "Warning" : "";
     statusBar.setText(GetText());
   }
 
+  /**
+   * Updates the StatusBar Text and displays the SPackage Information.
+   * @param pkg SPackage information to be displayed.
+   */
   public void update(final SPackage pkg) {
     ClassCount = pkg.classes().size();
     statusBar.setText(GetText());
