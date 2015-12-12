@@ -5,7 +5,6 @@ import org.eclipse.jdt.core.dom.Modifier;
 import sh4j.parser.model.SBlock;
 
 import java.awt.Color;
-import java.awt.Font;
 
 /**
  * SMethod Class.

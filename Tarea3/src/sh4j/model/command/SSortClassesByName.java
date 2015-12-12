@@ -19,7 +19,7 @@ public class SSortClassesByName extends SCommand {
   @Override
   public void executeOn(SProject project) {
 
-    for(SPackage pkg: project.packages()){
+    for (SPackage pkg : project.packages()) {
       Collections.sort(pkg.classes(),
           new Comparator<SClass>() {
             @Override

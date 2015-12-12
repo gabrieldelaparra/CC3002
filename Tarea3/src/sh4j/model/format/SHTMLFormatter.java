@@ -13,9 +13,8 @@ public class SHTMLFormatter implements SFormatter {
   private final StringBuffer buffer;
   private final SStyle style;
   private final SHighlighter[] highlighters;
-  public boolean showLineNumbers = false;
+  private boolean showLineNumbers = true;
   private int level;
-  private int line = 1;
   private int lineCount;
 
   /**
@@ -69,6 +68,7 @@ public class SHTMLFormatter implements SFormatter {
 
   /**
    * Appends a styled Character.
+   *
    * @param character Character to be styled and appended.
    */
   @Override
@@ -85,8 +85,7 @@ public class SHTMLFormatter implements SFormatter {
   }
 
   /**
-   * Appends a Carrier Return.
-   * For Tarea3, it also adds optionally the line numbers.
+   * Appends a Carrier Return. For Tarea3, it also adds optionally the line numbers.
    */
   @Override
   public void styledCR() {
@@ -101,6 +100,7 @@ public class SHTMLFormatter implements SFormatter {
 
   /**
    * Sets indent level definitions for a Block.
+   *
    * @param block Block to be intended.
    */
   @Override
@@ -123,6 +123,7 @@ public class SHTMLFormatter implements SFormatter {
 
   /**
    * Returns the formatted text.
+   *
    * @return Formats the texts and returns it.
    */
   @Override

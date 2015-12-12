@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class SSortClassesByHierarchy extends SCommand {
 
-  private boolean indent = true;
+  private final boolean indent = true;
 
   /**
    * Overriden method, takes True as Indentation. For UI use.
@@ -45,7 +45,8 @@ public class SSortClassesByHierarchy extends SCommand {
       for (SClass parent : pkg.classes()) {
         if (parent.isParent()) {
           for (SClass child : pkg.classes()) {
-            if (!child.isParent() && path(pkg.classes(), child).contains(parent.className()) &&
+            if (!child.isParent() &&
+                path(pkg.classes(), child).contains(parent.className()) &&
                 indent) {
               child.indent(true);
             }

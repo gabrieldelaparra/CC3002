@@ -8,6 +8,7 @@ import sh4j.model.style.SStyle;
  * @author juampi
  */
 public class SPseudoVariable implements SHighlighter {
+
   /**
    * Checks if a text needs highlight.
    *

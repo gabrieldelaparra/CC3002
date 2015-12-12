@@ -13,7 +13,7 @@ public class SObject extends Observable {
    *
    * @return Returns the UI Icon reference path.
    */
-  public String icon(){
+  public String icon() {
     return "";
   }
 
@@ -22,7 +22,7 @@ public class SObject extends Observable {
    *
    * @return Returns the UI Font.
    */
-  public Font font(){
+  public Font font() {
     return new Font("Helvetica", Font.PLAIN, 12);
   }
 
@@ -31,14 +31,14 @@ public class SObject extends Observable {
    *
    * @return Returns the UI Background Color.
    */
-  public Color background(){
+  public Color background() {
     return Color.WHITE;
   }
 
   /**
-   * SObject's Observer implementation;
+   * SObject's Observer implementation.
    */
-  public void changed(){
+  public void changed() {
     setChanged();
     notifyObservers();
   }
