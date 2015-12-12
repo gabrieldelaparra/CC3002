@@ -34,7 +34,7 @@ public class SIconTest {
     project.addPackage(pkg);
     assertEquals(new Font("Helvetica", Font.PLAIN, 12), pkg.font());
     assertEquals(Color.WHITE, pkg.background());
-    assertEquals("./resources/package_mode.gif", project.icon());
+    assertEquals("", project.icon());
     assertEquals(new Font("Helvetica", Font.PLAIN, 12), project.font());
     assertEquals(Color.WHITE, project.background());
 

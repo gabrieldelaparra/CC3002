@@ -53,7 +53,7 @@ public class SSortTest {
     for (SClass c : cls) {
       pkg.addClass(c);
     }
-    (new SSortClassesByHierarchy()).executeOn(project);
+    (new SSortClassesByHierarchy()).executeOn(project, false);
     String[] result = toStringArray(pkg.classes().toArray());
     print(result);
     String[] expected = new String[]{"A", "Z", "B"};
@@ -70,7 +70,7 @@ public class SSortTest {
     for (SClass c : cls) {
       pkg.addClass(c);
     }
-    (new SSortClassesByHierarchy()).executeOn(project);
+    (new SSortClassesByHierarchy()).executeOn(project, false);
     String[] result = toStringArray(pkg.classes().toArray());
     print(result);
     String[] expected = new String[]{"A", "G", "Z", "F", "W"};

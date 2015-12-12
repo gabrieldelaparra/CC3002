@@ -12,8 +12,15 @@ import java.util.List;
  * Created by CLGADEL on 15/11/2015.
  */
 public class SSortClassesByHierarchy extends SCommand {
+
+  private boolean indent = true;
+
   @Override
   public void executeOn(SProject project) {
+    executeOn(project, indent);
+  }
+
+  public void executeOn(SProject project, boolean indent) {
     (new SSortClassesByName()).executeOn(project);
     for (final SPackage pkg : project.packages()) {
       Collections.sort(pkg.classes(),
@@ -29,7 +36,8 @@ public class SSortClassesByHierarchy extends SCommand {
       for (SClass parent : pkg.classes()) {
         if (parent.isParent()) {
           for (SClass child : pkg.classes()) {
-            if (!child.isParent() && path(pkg.classes(), child).contains(parent.className())) {
+            if (!child.isParent() && path(pkg.classes(), child).contains(parent.className()) &&
+                indent) {
               child.indent(true);
             }
           }
