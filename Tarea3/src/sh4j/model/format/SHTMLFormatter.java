@@ -11,11 +11,12 @@ import sh4j.parser.model.SText;
  */
 public class SHTMLFormatter implements SFormatter {
   private final StringBuffer buffer;
+  private final SStyle style;
+  private final SHighlighter[] highlighters;
+  public boolean showLineNumbers = false;
   private int level;
   private int line = 1;
-  private final SStyle style;
   private int lineCount;
-  private final SHighlighter[] highlighters;
 
   /**
    * Constructor.
@@ -27,7 +28,12 @@ public class SHTMLFormatter implements SFormatter {
     this.style = style;
     this.highlighters = highlighters;
     buffer = new StringBuffer();
-    lineCount =0;
+    lineCount = 0;
+  }
+
+  public SHTMLFormatter(boolean showLineNumbers, SStyle style, SHighlighter... highlighters) {
+    this(style, highlighters);
+    this.showLineNumbers = showLineNumbers;
   }
 
   /**
@@ -69,9 +75,11 @@ public class SHTMLFormatter implements SFormatter {
   @Override
   public void styledCR() {
     lineCount++;
-    String number= lineCount<10?" "+lineCount:""+lineCount;
+    String number = lineCount < 10 ? " " + lineCount : "" + lineCount;
     buffer.append("\n");
-    buffer.append("<span style='background:#f1f0f0;'> "+number+" </span>");
+    if (showLineNumbers) {
+      buffer.append("<span style='background:#f1f0f0;'> " + number + " </span>");
+    }
     indent();
   }
 

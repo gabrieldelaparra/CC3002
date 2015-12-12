@@ -16,9 +16,13 @@ public abstract class SText {
     return format.formattedText();
   }
 
-  public String toHTML(SStyle style, SHighlighter... lighters) {
-    SFormatter format = new SHTMLFormatter(style, lighters);
+  public String toHTML(boolean showLineNumbers, SStyle style, SHighlighter... lighters) {
+    SFormatter format = new SHTMLFormatter(showLineNumbers, style, lighters);
     this.export(format);
     return format.formattedText();
+  }
+
+  public String toHTML(SStyle style, SHighlighter... lighters) {
+    return toHTML(true, style, lighters);
   }
 }
