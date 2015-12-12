@@ -65,17 +65,17 @@ public class SClass extends SObject {
     return declaration.getSuperclassType().toString();
   }
 
-  /**
-   * Gets a concatenated SuperClass.Class Name.
-   *
-   * @return Returns a SuperClass.ClassName String.
-   */
-  public String superClassName() {
-    if (declaration.getSuperclassType() == null) {
-      return this.className();
-    }
-    return declaration.getSuperclassType().toString() + "." + this.className();
-  }
+//  /**
+//   * Gets a concatenated SuperClass.Class Name.
+//   *
+//   * @return Returns a SuperClass.ClassName String.
+//   */
+//  public String superClassName() {
+//    if (declaration.getSuperclassType() == null) {
+//      return this.className();
+//    }
+//    return declaration.getSuperclassType().toString() + "." + this.className();
+//  }
 
   /**
    * Gets the current class name.
